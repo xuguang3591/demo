@@ -26,12 +26,23 @@ def callback(ch, method, properties, body):
     print('Get Msg = {}'.format(body))
 
 
+# with connection:
+#     """单个消费"""
+#     method, props, body = channel.basic_get(
+#         queue=queue_name,
+#         auto_ack=True
+#     )
+#     if body:
+#         print('get Msg{}'.format(body))
+
 with connection:
-    """消费"""
+    """批量消费"""
     tag = channel.basic_consume(
         queue=queue_name,
         on_message_callback=callback,
         auto_ack=True
     )
+    # 超时自动取消
     threading.Timer(10, cancel, [channel, tag]).start()
+
     channel.start_consuming()
