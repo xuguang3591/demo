@@ -11,7 +11,7 @@ channel = connection.channel()
 channel.exchange_declare(exchange=exchange_name, exchange_type='direct')
 
 # 设置queue，一定要绑定，不使用缺省交换机了
-channel.queue_declare(queue=queue_name, exclusive='False')
+channel.queue_declare(queue=queue_name, exclusive=False)
 # routing_key不指定使用队列名
 channel.queue_bind(queue=queue_name, exchange=exchange_name)
 
